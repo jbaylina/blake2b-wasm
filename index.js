@@ -76,6 +76,15 @@ Blake2b.prototype.update = function (input) {
   return this
 }
 
+Blake2b.prototype.getPartialHash = function () {
+  return wasm.memory.slice(this.pointer, this.pointer+216);
+}
+
+Blake2b.prototype.setPartialHash = function (ph) {
+  wasm.memory.set(ph, this.pointer);
+}
+
+
 Blake2b.prototype.digest = function (enc) {
   assert(this.finalized === false, 'Hash instance finalized')
   this.finalized = true
